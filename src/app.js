@@ -31,11 +31,10 @@ function displayForecast(response){
   forecast.forEach( function(forecastDay,index){
     if (index<6){
       forecastHTML=
-      forecastHTML+
-      `
-      <div class="col-2"
-      <div class="weather-forecast-date">
-      ${formatDay(forecastDay.dt)}</div>
+    forecastHTML +
+    `
+      <div class="col-2">
+      <div class="weather-forecast-date">${formatDay(forecastDay.dt)}</div>
       
       <img 
       src= "http://openweathermap.org/img/wn/${forecastDay.weather[0].icon}@2x.png"
@@ -44,15 +43,16 @@ function displayForecast(response){
       
       />
       <div class= "weather-forecast-temperatures">
-      <div class="weather-forecast-temperature-max">${Math.round(forecastDay.temp.max)}°</span>
-      <div class="weather-forecast-temperature-min">${Math.round(forecastDay.temp.min)}°</span>
+      <span class="weather-forecast-temperature-max">${Math.round(forecastDay.temp.max)}°</span>
+      <span class="weather-forecast-temperature-min">${Math.round(forecastDay.temp.min)}°</span>
       </div>
       </div>
-      `;
+      
+      `; 
     }
     
     });
-    forecastHTML=forecastHTML+ `</div>`;
+    forecastHTML=forecastHTML + `</div>`;
     forecastElement.innerHTML= forecastHTML;
   }
 
@@ -64,9 +64,6 @@ function displayForecast(response){
   }
 
   
-
-
-
 function displayTemperature(response) {
   let temperatureElement = document.querySelector("#temperature");
   let cityElement = document.querySelector("#city");
@@ -77,6 +74,7 @@ function displayTemperature(response) {
   let iconElement = document.querySelector("#icon");
 
   celsiusTemperature = response.data.main.temp;
+
   temperatureElement.innerHTML = Math.round(response.data.main.temp);
   cityElement.innerHTML = response.data.name;
   descriptionElement.innerHTML = response.data.weather[0].description;
@@ -88,6 +86,8 @@ function displayTemperature(response) {
     `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
   );
   iconElement.setAttribute("alt", response.data.weather[0].description);
+   
+  getForecast(response.data.coord);
 }
 function search(city) {
   let apiKey = "4b4dd0f7e130afd95c92e59d0dce94dc";
